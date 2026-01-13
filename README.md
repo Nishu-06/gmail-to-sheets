@@ -1,6 +1,6 @@
 # Gmail to Sheets Automation
 
-**Author:** [Your Full Name]
+# **Author:** Nishu Kumari
 
 A production-ready Python 3 automation system that connects to Gmail API and Google Sheets API to automatically log qualifying emails into a Google Sheet. The system uses OAuth 2.0 authentication, implements robust duplicate prevention, and includes state persistence to ensure emails are only processed once.
 
