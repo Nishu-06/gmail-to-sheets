@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  gmail-to-sheets:
+    build: .
+    container_name: gmail-to-sheets
+    restart: unless-stopped
+    environment:
+      - SPREADSHEET_ID=${SPREADSHEET_ID}
+      - SHEET_NAME=${SHEET_NAME:-Emails}
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+      - SUBJECT_FILTER=${SUBJECT_FILTER:-}
+      - EXCLUDE_NO_REPLY=${EXCLUDE_NO_REPLY:-false}
+    volumes:
+      # Mount credentials directory (contains credentials.json and token.json)
+      - ./credentials:/app/credentials:ro
+      # Mount state file for persistence
+      - ./state.json:/app/state.json
+      # Mount logs directory
+      - ./logs:/app/logs
+    # Run as non-root user for security (comment out if permission issues)
+    # user: "${UID:-1000}:${GID:-1000}"
