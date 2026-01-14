@@ -18,7 +18,7 @@ A production-ready Python 3 automation system that connects to Gmail API and Goo
 8. [Limitations](#limitations)
 9. [Proof of Execution](#proof-of-execution)
 10. [Future Enhancements](#future-enhancements)
-11. [Screenshots for proof](#proof-of-execution)
+11. [Screenshots for proof](#screenshot-proof-of-execution)
 
 ---
 
@@ -618,7 +618,7 @@ gmail-to-sheets/
 
 ---
 
-## Proof of Execution
+## Screenshot Proof of Execution
 
 | Gmail Inbox (Unread Emails) | OAuth Consent Screen |
 |-----------------------------|----------------------|
