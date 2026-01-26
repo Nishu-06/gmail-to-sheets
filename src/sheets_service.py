@@ -140,13 +140,13 @@ class SheetsService:
             def _get_range():
                 return self.service.spreadsheets().values().get(
                     spreadsheetId=self.spreadsheet_id,
-                    range=f"{sheet_name}!A1:D1"
+                    range=f"{sheet_name}!A1:E1"
                 ).execute()
             
             result = self._retry_api_call(_get_range)
             values = result.get('values', [])
             
-            expected_headers = ['From', 'Subject', 'Date', 'Content']
+            expected_headers = ['From', 'Subject', 'Date', 'Content', 'Labels']
             
             if not values or values[0] != expected_headers:
                 logger.info("Adding header row to sheet")
@@ -154,7 +154,7 @@ class SheetsService:
                 def _update_headers():
                     self.service.spreadsheets().values().update(
                         spreadsheetId=self.spreadsheet_id,
-                        range=f"{sheet_name}!A1:D1",
+                        range=f"{sheet_name}!A1:E1",
                         valueInputOption='RAW',
                         body={
                             'values': [expected_headers]
@@ -191,7 +191,7 @@ class SheetsService:
             def _append_values():
                 self.service.spreadsheets().values().append(
                     spreadsheetId=self.spreadsheet_id,
-                    range=f"{sheet_name}!A:D",
+                    range=f"{sheet_name}!A:E",
                     valueInputOption='RAW',
                     insertDataOption='INSERT_ROWS',
                     body={
@@ -229,7 +229,7 @@ class SheetsService:
             def _get_values():
                 return self.service.spreadsheets().values().get(
                     spreadsheetId=self.spreadsheet_id,
-                    range=f"{sheet_name}!A2:D{max_rows + 1}"
+                    range=f"{sheet_name}!A2:E{max_rows + 1}"
                 ).execute()
             
             result = self._retry_api_call(_get_values)

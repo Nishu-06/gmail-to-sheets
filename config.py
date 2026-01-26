@@ -36,6 +36,7 @@ SHEET_NAME = os.getenv('SHEET_NAME', 'Emails')  # Default sheet name
 # Email filtering settings
 SUBJECT_FILTER = os.getenv('SUBJECT_FILTER', '')  # Optional: filter by subject keyword
 EXCLUDE_NO_REPLY = os.getenv('EXCLUDE_NO_REPLY', 'false').lower() == 'true'
+LAST_24_HOURS_ONLY = os.getenv('LAST_24_HOURS_ONLY', 'false').lower() == 'true'  # Process only emails from last 24 hours
 
 # Retry settings
 MAX_RETRIES = 3

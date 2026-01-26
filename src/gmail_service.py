@@ -22,7 +22,7 @@ from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 import time
 
-from config import SCOPES, CREDENTIALS_FILE, TOKEN_FILE, GMAIL_QUERY, MAX_RETRIES, RETRY_DELAY
+from config import SCOPES, CREDENTIALS_FILE, TOKEN_FILE, GMAIL_QUERY, MAX_RETRIES, RETRY_DELAY, LAST_24_HOURS_ONLY
 
 logger = logging.getLogger(__name__)
 
@@ -136,6 +136,13 @@ class GmailService:
         """
         if query is None:
             query = GMAIL_QUERY
+        
+        # Add last 24 hours filter if enabled
+        if LAST_24_HOURS_ONLY:
+            from datetime import datetime, timedelta
+            cutoff_date = (datetime.now() - timedelta(hours=24)).strftime('%Y/%m/%d')
+            query = f"{query} after:{cutoff_date}"
+            logger.info(f"Filtering emails from last 24 hours (after {cutoff_date})")
         
         try:
             logger.info(f"Fetching unread emails with query: {query}")

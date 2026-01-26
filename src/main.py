@@ -242,6 +242,7 @@ def main():
                 from_addr = safe_truncate_field(email['from'], MAX_CELL_LENGTH)
                 subject = safe_truncate_field(email['subject'], MAX_CELL_LENGTH)
                 date_str = safe_truncate_field(email['date'], MAX_CELL_LENGTH)
+                labels = safe_truncate_field(email.get('labels', 'None'), MAX_CELL_LENGTH)
                 
                 # Final safety check: ensure no field exceeds 50,000 characters
                 # This handles edge cases where multi-byte characters might cause issues
@@ -249,7 +250,8 @@ def main():
                     from_addr[:50000] if len(from_addr) <= 50000 else from_addr[:49987] + "...",
                     subject[:50000] if len(subject) <= 50000 else subject[:49987] + "...",
                     date_str[:50000] if len(date_str) <= 50000 else date_str[:49987] + "...",
-                    content[:50000] if len(content) <= 50000 else content[:49987] + "...[TRUNCATED]"
+                    content[:50000] if len(content) <= 50000 else content[:49987] + "...[TRUNCATED]",
+                    labels[:50000] if len(labels) <= 50000 else labels[:49987] + "..."
                 ]
                 
                 # Verify all fields are within limit

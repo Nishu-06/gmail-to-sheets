@@ -148,9 +148,15 @@ def parse_email_message(message: Dict) -> Optional[Dict]:
         # Extract message ID for duplicate tracking
         message_id = message.get('id', '')
         
+        # Extract email labels
+        label_ids = message.get('labelIds', [])
+        # Filter out system labels and format user labels
+        user_labels = [label for label in label_ids if not label.startswith('CATEGORY_') and label not in ['INBOX', 'UNREAD', 'IMPORTANT']]
+        labels_str = ', '.join(user_labels) if user_labels else 'None'
+        
         # Apply filters
         if EXCLUDE_NO_REPLY:
-            if 'no-reply' in from_email.lower() or 'noreply' in from_email.lower():
+            if 'no-reply' in from_email.lower() or 'noreply' in from_email.lower() or 'no_reply' in from_email.lower():
                 logger.debug(f"Skipping no-reply email: {from_email}")
                 return None
         
@@ -221,6 +227,7 @@ def parse_email_message(message: Dict) -> Optional[Dict]:
             'date': date_iso,
             'content': content,
             'message_id': message_id,
+            'labels': labels_str,
             'was_truncated': was_truncated
         }
         
